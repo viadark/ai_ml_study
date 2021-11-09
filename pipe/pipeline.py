@@ -9,12 +9,12 @@ from kfp import dsl
 
 def boston_pipeline():
     add_p = dsl.ContainerOp(
-        name="load iris data pipeline",
+        name="load boston data pipeline",
         image="normalboot/boston-preprocessing:0.1",
         arguments=[
             '--data_path', './boston_contest.csv'
         ],
-        file_outputs={'boston' : '/boston.csv'}
+        file_outputs={'boston' : '/boston_contest.csv'}
     )
     ml = dsl.ContainerOp(
         name="training pipeline",
