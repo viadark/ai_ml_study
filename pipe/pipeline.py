@@ -23,6 +23,14 @@ def boston_pipeline():
             '--data', add_p.outputs['boston']
         ]
     )
+    test = dsl.ContainerOp(
+        name="test pipeline",
+        image="normalboot/boston-test:0.1",
+        arguments=[
+            '--test_data', './boston_contest_test.csv',
+            '--data', ml.outputs['model']
+        ]
+    )
     ml.after(add_p)
 
 if __name__ == "__main__":
