@@ -57,4 +57,4 @@ if __name__ == "__main__":
     from sklearn.metrics import mean_squared_error
 
     mse = mean_squared_error(y_test, predict)
-    print(f'\nAccuracy Score on test data : {mse}')
+    print(f'\nMSE on test data : {np.sqrt(mse)}')
