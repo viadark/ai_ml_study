@@ -10,7 +10,7 @@ from kfp import dsl
 def boston_pipeline():
     add_p = dsl.ContainerOp(
         name="load boston data pipeline",
-        image="normalboot/boston-preprocessing:0.2",
+        image="normalboot/boston-preprocessing:0.3",
         arguments=[
             '--data_path', './boston_contest.csv'
         ],
@@ -28,7 +28,7 @@ def boston_pipeline():
 
     ans_set = dsl.ContainerOp(
         name="load answer set data pipeline",
-        image="normalboot/boston-preprocessing:0.2",
+        image="normalboot/boston-preprocessing:0.3",
         arguments=[
             '--data_path', './answer.csv'
         ],
