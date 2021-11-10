@@ -37,7 +37,7 @@ def boston_pipeline():
     
     test = dsl.ContainerOp(
         name="test pipeline",
-        image="normalboot/boston-test:0.1",
+        image="normalboot/boston-test:0.2",
         arguments=[
             '--answer_data', ans_set.outputs['answer'],
             '--trained_coef', ml.outputs['trained_coef'],
