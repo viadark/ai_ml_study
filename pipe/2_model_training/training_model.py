@@ -50,8 +50,10 @@ if __name__ == "__main__":
 
     mse = mean_squared_error(y_test, predict)
     print(f'\nMSE on test data : {np.sqrt(mse)}')
-    f = open('/train_result', 'w')
+    f = open('/trained_coef', 'w')
     for c in model.coef_:
         f.write(f'{c} ')
-    f.write(f'\n{model.intercept_}')
+    f.close()
+    f = open('/trained_intercept', 'w')
+    f.write(f'{model.intercept_}')
     f.close()

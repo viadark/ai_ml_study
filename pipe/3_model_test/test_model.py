@@ -37,9 +37,14 @@ if __name__ == "__main__":
         help="Input answer data csv"
     )
     argument_parser.add_argument(
-        '--train_result',
+        '--trained_coef',
         type=str,
-        help="Train result coef & intercepts"
+        help="Train result coef"
+    )
+    argument_parser.add_argument(
+        '--trained_intercept',
+        type=str,
+        help="Train result intercept"
     )
 
     args = argument_parser.parse_args()
@@ -50,7 +55,8 @@ if __name__ == "__main__":
     scaler.fit(x)
     X_scaled = scaler.transform(x)
     model = LinearRegression()
-    model.coef_ , model.intercept_ = read_model_result(args.train_result)
+    model.coef_ = list(map(float, args.trained_coef.rstrip().split()))
+    model.intercept_ = float(args.trained_intercept.rstrip())
     predict = model.predict(X_scaled)
     from sklearn.metrics import mean_squared_error
 
