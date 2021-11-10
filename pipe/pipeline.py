@@ -23,7 +23,7 @@ def boston_pipeline():
         arguments=[
             '--data', add_p.outputs['boston']
         ],
-        file_outputs={'trained_coef': '/traind_coef', 'trained_intercept': '/trained_intercept'}
+        file_outputs={'trained_coef': '/trained_coef', 'trained_intercept': '/trained_intercept'}
     )
 
     ans_set = dsl.ContainerOp(
