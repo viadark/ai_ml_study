@@ -55,7 +55,7 @@ if __name__ == "__main__":
     scaler.fit(x)
     X_scaled = scaler.transform(x)
     model = LinearRegression()
-    model.coef_ = list(map(float, args.trained_coef.rstrip().split()))
+    model.coef_ = np.array(list(map(float, args.trained_coef.rstrip().split())))
     model.intercept_ = float(args.trained_intercept.rstrip())
     predict = model.predict(X_scaled)
     from sklearn.metrics import mean_squared_error
