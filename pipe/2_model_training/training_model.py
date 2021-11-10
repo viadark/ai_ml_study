@@ -13,13 +13,6 @@ def load_data(data):
     print(boston.shape)
     return boston
 
-def preprocess_data(data):
-    data['ZN'] = data['ZN'].fillna(0)
-    data['NOX'] = data['NOX'].fillna(data.NOX.mean())
-    data.drop(['RAD'], axis='columns', inplace=True)
-    data.drop(['CHAS'], axis='columns', inplace=True)
-    return data
-
 def reshape_data(data):
     total_cols = len(data.columns)
     x = data.iloc[:,:-1].values.reshape(-1,total_cols - 1)
@@ -44,8 +37,8 @@ if __name__ == "__main__":
 
     args = argument_parser.parse_args()
     boston = args.data
+    answer_boston = args.answer
     boston = load_data(boston)
-    boston = preprocess_data(boston)
     X_train, X_test, y_train, y_test = get_train_test_data(boston)
     scaler = MinMaxScaler()
     scaler.fit(X_train)
@@ -58,3 +51,8 @@ if __name__ == "__main__":
 
     mse = mean_squared_error(y_test, predict)
     print(f'\nMSE on test data : {np.sqrt(mse)}')
+    f = open('/train_result', 'w')
+    for c in model.coef_:
+        f.write(f'{c} ')
+    f.write(f'\n{model.intercept_}')
+    f.close()
