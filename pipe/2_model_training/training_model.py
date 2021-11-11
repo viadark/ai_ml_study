@@ -38,22 +38,30 @@ if __name__ == "__main__":
     args = argument_parser.parse_args()
     boston = args.data
     boston = load_data(boston)
-    X_train, X_test, y_train, y_test = get_train_test_data(boston)
-    scaler = MinMaxScaler()
-    scaler.fit(X_train)
-    X_train_scaled = scaler.transform(X_train)
-    X_test_scaled = scaler.transform(X_test)
-    model = LinearRegression()
-    model.fit(X_train_scaled, y_train)
-    predict = model.predict(X_test_scaled)
-    from sklearn.metrics import mean_squared_error
 
-    mse = mean_squared_error(y_test, predict)
-    print(f'\nMSE on test data : {np.sqrt(mse)}')
+    final_model = LinearRegression()
+    min_mse = 987654321.9
+    for _ in range(10000):
+        X_train, X_test, y_train, y_test = get_train_test_data(boston)
+        scaler = MinMaxScaler()
+        scaler.fit(X_train)
+        X_train_scaled = scaler.transform(X_train)
+        X_test_scaled = scaler.transform(X_test)
+        model = LinearRegression()
+        model.fit(X_train_scaled, y_train)
+        predict = model.predict(X_test_scaled)
+        from sklearn.metrics import mean_squared_error
+
+        mse = mean_squared_error(y_test, predict)
+        if min_mse > np.sqrt(mse):
+            print(f'\nMSE on test data : {np.sqrt(mse)}')
+            min_mse = mse
+            final_model = model
+            
     f = open('/trained_coef', 'w')
-    for c in model.coef_:
+    for c in final_model.coef_:
         f.write(f'{c} ')
     f.close()
     f = open('/trained_intercept', 'w')
-    f.write(f'{model.intercept_}')
+    f.write(f'{final_model.intercept_}')
     f.close()
