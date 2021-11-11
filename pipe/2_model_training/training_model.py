@@ -6,6 +6,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import accuracy_score, mean_squared_error
 from io import StringIO
+import copy
 
 def load_data(data):
     d = StringIO(data)
@@ -56,8 +57,10 @@ if __name__ == "__main__":
         if min_mse > np.sqrt(mse):
             print(f'\nMSE on test data : {np.sqrt(mse)}')
             min_mse = np.sqrt(mse)
-            final_model = model
+            final_model = copy.deepcopy(model)
 
+    print(f"final coef : {final_model.coef_}")
+    print(f"last model coef : {model.coef_}")
     f = open('/trained_coef', 'w')
     for c in final_model.coef_:
         f.write(f'{c} ')
