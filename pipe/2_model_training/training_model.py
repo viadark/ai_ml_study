@@ -55,9 +55,9 @@ if __name__ == "__main__":
         mse = mean_squared_error(y_test, predict)
         if min_mse > np.sqrt(mse):
             print(f'\nMSE on test data : {np.sqrt(mse)}')
-            min_mse = mse
+            min_mse = np.sqrt(mse)
             final_model = model
-            
+
     f = open('/trained_coef', 'w')
     for c in final_model.coef_:
         f.write(f'{c} ')
