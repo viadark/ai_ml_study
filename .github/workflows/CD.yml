@@ -1,0 +1,32 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CD
+
+on:
+  # Triggers the workflow on completed CI
+  workflow_run:
+    workflows: ["ci"]
+    branches: [main]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v2
+      
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.8.10'
+          architecture: x64
+      
+      - uses: BSFish/pip-action@v1
+        with:
+          packages: |
+            kfp==1.8.9
+            
+      - name: run pipeline to kubeflow
+        run: python pipe/pipeline.py
+      
