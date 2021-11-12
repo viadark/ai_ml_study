@@ -10,7 +10,7 @@ from kfp import dsl
 def boston_pipeline():
     add_p = dsl.ContainerOp(
         name="load boston data pipeline",
-        image="normalboot/boston-preprocessing:0.3",
+        image="normalboot/boston-preprocessing:latest",
         arguments=[
             '--data_path', './boston_contest.csv'
         ],
@@ -28,7 +28,7 @@ def boston_pipeline():
 
     ans_set = dsl.ContainerOp(
         name="load answer set data pipeline",
-        image="normalboot/boston-preprocessing:0.3",
+        image="normalboot/boston-preprocessing:latest",
         arguments=[
             '--data_path', './answer.csv'
         ],
@@ -37,7 +37,7 @@ def boston_pipeline():
     
     test = dsl.ContainerOp(
         name="test pipeline",
-        image="normalboot/boston-test:0.3",
+        image="normalboot/boston-test:latest",
         arguments=[
             '--answer_data', ans_set.outputs['answer'],
             '--trained_coef', ml.outputs['trained_coef'],
@@ -48,7 +48,7 @@ def boston_pipeline():
 
     deploy = dsl.ContainerOp(
         name="deploy pipeline to AI Platform",
-        image="normalboot/model-deploy:0.1",
+        image="normalboot/model-deploy:latest",
         arguments=[
             '--model', test.outputs['model']
         ]
