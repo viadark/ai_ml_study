@@ -12,7 +12,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ${{ secrets.SERVICE_ACCOUNT_DOCKER }}
+    runs-on: ubuntu:latest
     steps:
       - name: Check out
         uses: actions/checkout@v2
@@ -26,6 +26,11 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install kfp
+          
+      - name: Install service account keys
+        run: |
+          echo ${{ secrets.KUBE_SERVICE_ACCOUNT }} > ~/.keys/pj-lge-ldp-kubeflow-connector.json
+          export GOOGLE_APPLICATION_CREDENTIALS=~/.keys/pj-lge-ldp-kubeflow-connector.json
             
       - name: run pipeline to kubeflow
         run: python pipe/pipeline.py
