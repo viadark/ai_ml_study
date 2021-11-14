@@ -19,7 +19,7 @@ def boston_pipeline():
 
     ml = dsl.ContainerOp(
         name="training pipeline",
-        image="normalboot/boston-train:0.8",
+        image="normalboot/boston-train:latest",
         arguments=[
             '--data', add_p.outputs['boston']
         ],
