@@ -31,7 +31,6 @@ jobs:
         run: |
           echo ${{ secrets.KUBE_SERVICE_ACCOUNT }} > ~/.keys/pj-lge-ldp-kubeflow-connector.json
           export GOOGLE_APPLICATION_CREDENTIALS=~/.keys/pj-lge-ldp-kubeflow-connector.json
-            
       - name: run pipeline to kubeflow
         run: python pipe/pipeline.py
       
