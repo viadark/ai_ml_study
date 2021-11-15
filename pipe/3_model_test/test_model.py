@@ -60,6 +60,7 @@ if __name__ == "__main__":
     model.coef_ = np.array(list(map(float, args.trained_coef.rstrip().split())))
     model.intercept_ = float(args.trained_intercept.rstrip())
     predict = model.predict(X_scaled)
+    print(predict)
     from sklearn.metrics import mean_squared_error
 
     mse = mean_squared_error(y, predict)
