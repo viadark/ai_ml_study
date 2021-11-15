@@ -8,7 +8,6 @@ from sklearn.metrics import accuracy_score, mean_squared_error
 from io import StringIO
 from sklearn.pipeline import Pipeline
 import pickle
-from google.cloud import storage
 
 def load_data(data):
     d = StringIO(data)
