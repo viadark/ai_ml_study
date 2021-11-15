@@ -71,6 +71,6 @@ if __name__ == "__main__":
         ('linear_regression', LinearRegression())
     ])
     pipeline.fit(x, y)
-    with open('model.pkl', 'wb') as model_file:
+    with open('/model.pkl', 'wb') as model_file:
         pickle.dump(pipeline, model_file)
     # how to upload "model.pkl" to AI Platform model
