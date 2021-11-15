@@ -14,7 +14,7 @@ def boston_pipeline():
         arguments=[
             '--data_path', './boston_contest_fillna.csv'
         ],
-        file_outputs={'boston' : '/boston_contest.csv'}
+        file_outputs={'boston' : '/boston_contest_fillna.csv'}
     )
 
     ml = dsl.ContainerOp(
