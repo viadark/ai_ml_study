@@ -6,6 +6,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import accuracy_score, mean_squared_error
 from io import StringIO
+from sklearn.pipeline import Pipeline
+import pickle
+from google.cloud import storage
 
 def load_data(data):
     d = StringIO(data)
@@ -62,3 +65,13 @@ if __name__ == "__main__":
 
     mse = mean_squared_error(y, predict)
     print(f'\nMSE on Answer data : {np.sqrt(mse)}')
+
+    print()
+    pipeline = Pipeline([
+        ('scaler', MinMaxScaler()),
+        ('linear_regression', LinearRegression())
+    ])
+    pipeline.fit(x, y)
+    with open('model.pkl', 'wb') as model_file:
+        pickle.dump(pipeline, model_file)
+    

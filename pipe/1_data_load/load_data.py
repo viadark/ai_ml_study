@@ -6,6 +6,9 @@ def preprocess_data(data):
     data['NOX'] = data['NOX'].fillna(data.NOX.mean())
     data.drop(['RAD'], axis='columns', inplace=True)
     data.drop(['CHAS'], axis='columns', inplace=True)
+    data.drop(['RAD'], axis='columns', inplace=True)
+    data.drop(['CHAS'], axis='columns', inplace=True)
+    data = data.drop(index=range(335,len(data)))
     return data
 
 if __name__ == "__main__":
