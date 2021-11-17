@@ -23,13 +23,6 @@ def get_train_test_data(boston):
     y = boston.iloc[:,-1]
     return x, y
 
-def read_model_result(file):
-    print(f"model result file path : {file}")
-    f = open(file, 'r')
-    coef = list(map(float, f.readline().rstrip().split()))
-    inter = float(f.readline().rstrip())
-    f.close()
-    return coef, inter
 
 if __name__ == "__main__":
     argument_parser = argparse.ArgumentParser()
