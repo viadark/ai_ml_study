@@ -42,11 +42,16 @@ if __name__ == "__main__":
         ('scaler', MinMaxScaler()),
         ('linear_regression', LinearRegression())
     ])
+    print("make pipeline")
     pipeline.fit(X_train, y_train)
+    print("fit complete")
     predict = pipeline.predict(X_test)
+    print("predict complete")
 
     from sklearn.metrics import mean_squared_error
     mse = mean_squared_error(y_test, predict)
+    print(f"mse : {np.sqrt(mse)}")
 
     with open('/model.pkl', 'wb') as model_file:
         pickle.dump(pipeline, model_file)
+    print("pickle dump complete")
