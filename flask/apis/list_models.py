@@ -12,7 +12,6 @@ class Models(Resource):
         ret = {"models": []}
         print(f"curr folder = {folder}")
         for filename in os.listdir(folder):
-            filename_spl = filename.split(".")
             print(filename)
             ret["models"].append(filename)
         return ret
@@ -24,14 +23,8 @@ class Models(Resource):
         args = parser.parse_args()
         target_name = args['name']
         print(args['name'])
-        #target_name = "boston_model"
-        print(__file__)
-        print(os.path.realpath(__file__))
-        print(os.path.abspath(__file__))
         print(os.path.dirname(__file__))
         base_path = f"{os.path.dirname(__file__)}/../models/{target_name}/"
-        #realpath = os.path.abspath(__file__).split("/")
-        #base_path = f"./models/{target_name}/"
         if not os.path.exists(os.path.dirname(base_path)):
             try:
                 os.makedirs(os.path.dirname(base_path))
@@ -48,5 +41,5 @@ class Models(Resource):
         else:
             print("scaler is null")
         
-        print('model saved')
-        return 'model saved'
+        print(f"{args['name']} model saved")
+        return f"{args['name']} model saved"

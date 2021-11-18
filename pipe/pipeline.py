@@ -23,7 +23,7 @@ def boston_pipeline():
         arguments=[
             '--data', add_p.outputs['boston']
         ],
-        file_outputs={'trained_coef': '/trained_coef', 'trained_intercept': '/trained_intercept'}
+        file_outputs={'model': '/model.pkl'}
     )
 
     ans_set = dsl.ContainerOp(
@@ -40,10 +40,8 @@ def boston_pipeline():
         image="normalboot/boston-test:latest",
         arguments=[
             '--answer_data', ans_set.outputs['answer'],
-            '--trained_coef', ml.outputs['trained_coef'],
-            '--trained_intercept', ml.outputs['trained_intercept']
+            '--model', ml.outputs['model']
         ],
-        file_outputs={'model': '/model.pkl'}
     )
 
     ml.after(add_p)

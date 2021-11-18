@@ -7,6 +7,8 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import accuracy_score, mean_squared_error
 from io import StringIO
 import copy
+from sklearn.pipeline import Pipeline
+import pickle
 
 def load_data(data):
     d = StringIO(data)
@@ -35,22 +37,16 @@ if __name__ == "__main__":
     boston = load_data(boston)
 
     X_train, X_test, y_train, y_test = get_train_test_data(boston)
-    scaler = MinMaxScaler()
-    scaler.fit(X_train)
-    X_train_scaled = scaler.transform(X_train)
-    X_test_scaled = scaler.transform(X_test)
-    model = LinearRegression()
-    model.fit(X_train_scaled, y_train)
-    predict = model.predict(X_test_scaled)
+
+    pipeline = Pipeline([
+        ('scaler', MinMaxScaler()),
+        ('linear_regression', LinearRegression())
+    ])
+    pipeline.fit(X_train, y_train)
+    predict = pipeline.predict(X_test)
 
     from sklearn.metrics import mean_squared_error
     mse = mean_squared_error(y_test, predict)
 
-    print(f"last model coef : {model.coef_}")
-    f = open('/trained_coef', 'w')
-    for c in model.coef_:
-        f.write(f'{c} ')
-    f.close()
-    f = open('/trained_intercept', 'w')
-    f.write(f'{model.intercept_}')
-    f.close()
+    with open('/model.pkl', 'wb') as model_file:
+        pickle.dump(pipeline, model_file)
