@@ -32,18 +32,13 @@ if __name__ == "__main__":
         type=str,
         help="Input answer data csv"
     )
-    argument_parser.add_argument(
-        '--model',
-        action="store_true",
-        help="Train result coef"
-    )
 
     args = argument_parser.parse_args()
     boston = args.answer_data
     boston = load_data(boston)
     x, y = get_train_test_data(boston)
 
-    model = pickle.load(args.model)
+    model = pickle.load("/data/model.pkl")
     
     predict = model.predict(x)
     print(predict)
@@ -53,11 +48,10 @@ if __name__ == "__main__":
     print(f'\nMSE on Answer data : {np.sqrt(mse)}')
 
     # how to upload "model.pkl" to AI Platform model
-
-    files = {
-        'file': args.model,
-        'name': "boston_linear"
-    }
-    res = requests.post(url="http://viadark.iptime.org:8888/models", files=files)
-    print(res)
-    print(res.text)
+    # files = {
+    #     'file': args.model,
+    #     'name': "boston_linear"
+    # }
+    # res = requests.post(url="http://viadark.iptime.org:8888/models", files=files)
+    # print(res)
+    # print(res.text)

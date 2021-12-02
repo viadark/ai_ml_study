@@ -8,6 +8,13 @@ from kfp import dsl
 )
 
 def boston_pipeline():
+    vol = dsl.VolumeOp(
+        name="boston-pipeline-volume",
+        resource_name="pipeline-pvc",
+        modes=dsl.VOLUME_MODE_RWM,
+        size="100Mi"
+    )
+
     add_p = dsl.ContainerOp(
         name="load boston data pipeline",
         image="normalboot/boston-preprocessing:latest",
@@ -23,7 +30,8 @@ def boston_pipeline():
         arguments=[
             '--data', add_p.outputs['boston']
         ],
-        file_outputs={'model': '/model.pkl'}
+        pvolumes={"/data": vol.volume}
+        #file_outputs={'model': '/model.pkl'}
     )
 
     ans_set = dsl.ContainerOp(
@@ -40,10 +48,9 @@ def boston_pipeline():
         image="normalboot/boston-test:latest",
         arguments=[
             '--answer_data', ans_set.outputs['answer'],
-            '--model', ml.outputs['model']
         ],
+        pvolumes={"/data": vol.volume}
     )
-
     ml.after(add_p)
     test.after(ans_set)
     test.after(ml)

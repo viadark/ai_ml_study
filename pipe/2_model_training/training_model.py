@@ -52,6 +52,6 @@ if __name__ == "__main__":
     mse = mean_squared_error(y_test, predict)
     print(f"mse : {np.sqrt(mse)}")
 
-    with open('/model.pkl', 'wb') as model_file:
+    with open('/data/model.pkl', 'wb') as model_file:
         pickle.dump(pipeline, model_file)
     print("pickle dump complete")
