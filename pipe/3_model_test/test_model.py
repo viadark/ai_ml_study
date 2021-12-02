@@ -8,6 +8,7 @@ from sklearn.metrics import accuracy_score, mean_squared_error
 from io import StringIO
 from sklearn.pipeline import Pipeline
 import pickle
+import requests
 
 def load_data(data):
     d = StringIO(data)
@@ -36,8 +37,8 @@ if __name__ == "__main__":
     boston = args.answer_data
     boston = load_data(boston)
     x, y = get_train_test_data(boston)
-
-    model = pickle.load("/data/model.pkl")
+    
+    model = pickle.load(open("/data/model.pkl", 'rb'))
     
     predict = model.predict(x)
     print(predict)
