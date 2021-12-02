@@ -10,7 +10,7 @@ from kfp import dsl
 def boston_pipeline():
     vol = dsl.VolumeOp(
         name="boston-pipeline-volume",
-        resource_name="pipeline-pvc",
+        resource_name="pvc-877fb361-a83f-4368-9d3c-972192dbc6cc",
         modes=dsl.VOLUME_MODE_RWM,
         size="100Mi"
     )
